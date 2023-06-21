@@ -1,0 +1,24 @@
+import requests
+import json
+
+def check_updates(owner, repo, current_version):
+    url = f'https://api.github.com/repos/MCHOfficial/MinecraftHelper/releases/latest'
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        release_info = json.loads(response.text)
+        latest_version = release_info['tag_name']
+        if latest_version != current_version:
+            print(f"A new version ({latest_version}) of {repo} is available. Please update.")
+        else:
+            print(f"You are using the latest version ({current_version}) of {repo}.")
+    else:
+        print(f"Failed to retrieve release information. Status Code: {response.status_code}")
+
+# Repository details
+owner = 'github_owner'
+repo = 'repository_name'
+current_version = '0.0.0'
+
+# Check for updates
+check_updates(owner, repo, current_version)
